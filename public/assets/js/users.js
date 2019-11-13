@@ -74,4 +74,18 @@ $('#midifyBox').on('submit','#modifyUser',function(){
         }  
     });
     return false;
+});
+// 删除用户功能
+$('#userBox').on('click','.deleteUser',function(){
+    // 获取当前用户id
+    var id = $(this).attr('data-id');
+    // 发送请求删除用户
+    $.ajax({
+        type: "delete",
+        url: "/users/"+id,
+        success: function (response) {
+            console.log(response);
+            location.href = 'users.html'
+        }
+    });
 })
