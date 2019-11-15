@@ -79,12 +79,12 @@
         <div class="col-md-8">
           <div class="page-action">
             <!-- show when multiple checked -->
-            <a class="btn btn-danger btn-sm" href="javascript:;" style="display: none">批量删除</a>
+            <a class="btn btn-danger btn-sm" href="javascript:;" style="display: none" id="deleteManyUser">批量删除</a>
           </div>
           <table class="table table-striped table-bordered table-hover">
             <thead>
                <tr>
-                <th class="text-center" width="40"><input type="checkbox"></th>
+                <th class="text-center" width="40"><input type="checkbox" id="selectAll"></th>
                 <th class="text-center" width="80">头像</th>
                 <th>邮箱</th>
                 <th>昵称</th>
@@ -148,7 +148,7 @@
   <script type="text/html" id="userTpl">
     {{each data}}
     <tr>
-        <td class="text-center"><input type="checkbox"></td>
+        <td class="text-center"><input type="checkbox" class="selectOne" data-id="{{$value._id}}"></td>
         <td class="text-center">
         {{if $value.avatar}}
         <img class="avatar" src="{{$value.avatar}}">
@@ -156,7 +156,7 @@
         </td>
         <td>{{$value.email}}</td>
         <td>{{$value.nickName}}</td>
-        <td>{{$value.stasus == 1 ? '激活' : '未激活'}}</td>
+        <td>{{$value.status == 1 ? '激活' : '未激活'}}</td>
         <td>{{$value.role == 'admin' ? '管理员' : '普通用户'}}</td>
         <td class="text-center">
           <a href="javascript:;" class="btn btn-default btn-xs editUser" data-id="{{$value._id}}">编辑</a>

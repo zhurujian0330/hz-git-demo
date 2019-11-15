@@ -80,12 +80,51 @@ $('#userBox').on('click','.deleteUser',function(){
     // 获取当前用户id
     var id = $(this).attr('data-id');
     // 发送请求删除用户
-    $.ajax({
-        type: "delete",
-        url: "/users/"+id,
-        success: function (response) {
-            console.log(response);
-            location.href = 'users.html'
-        }
-    });
-})
+    if(confirm('您确定要删除这个用户吗')){
+        $.ajax({
+            type: "delete",
+            url: "/users/"+id,
+            success: function (response) {
+                console.log(response);
+                location.href = 'users.html'
+            }
+        });
+    } 
+});
+// 全选按钮状态决定所有单选按钮状态,批量删除按钮跟随它的状态
+$('#selectAll').on('change',function(){
+    // 获取全选按钮的状态
+    var selected = $(this).prop('checked');
+    $('#userBox').find('input').prop('checked',selected);
+    if(selected){
+        $('#deleteManyUser').show();
+    }else{
+        $('#deleteManyUser').hide();
+    }
+});
+// 用事件委托 给所有的单选按钮绑定change事件，判断是否是左右的单选按钮都被选中
+$('#userBox').on('change','.selectOne',function(){
+    $('#selectAll').prop('checked',$('#userBox').find('input').length == $('#userBox').find('input').filter(':checked').length);
+    if($('#userBox').find('input').filter(':checked').length > 0){
+        $('#deleteManyUser').show();
+    }else {
+        $('#deleteManyUser').hide();
+    }
+});
+// 给批量删除按钮绑定点击事件
+$('#deleteManyUser').on('click',function(){
+    var ids = [];
+    if(confirm('你确定要进行批量删除操作吗')){
+       var selectUsers =  $('#userBox').find('input').filter(':checked');
+       $.each(selectUsers, function (index, element) { 
+            ids.push($(element).attr('data-id'))
+       });
+      $.ajax({
+          type: "delete",
+          url: "/users/" + ids.join('-'),
+          success: function (response) {
+              location.reload();
+          }
+      });
+    }
+});

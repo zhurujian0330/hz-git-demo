@@ -28,14 +28,14 @@
       <!-- <div class="alert alert-danger">
         <strong>错误！</strong>发生XXX错误
       </div> -->
-      <form class="row">
+      <form class="row" id="postAddForm">
         <div class="col-md-9">
           <div class="form-group">
             <label for="title">标题</label>
             <input id="title" class="form-control input-lg" name="title" type="text" placeholder="文章标题">
           </div>
           <div class="form-group">
-            <label for="content">标题</label>
+            <label for="content">内容</label>
             <textarea id="content" class="form-control input-lg" name="content" cols="30" rows="10" placeholder="内容"></textarea>
           </div>
         </div>
@@ -43,25 +43,25 @@
           <div class="form-group">
             <label for="feature">特色图像</label>
             <!-- show when image chose -->
-            <img class="help-block thumbnail" style="display: none">
+            <img class="help-block thumbnail" style="display: none" id="proview">
             <input id="feature" class="form-control" name="feature" type="file">
+            <input type="hidden" name="thumbnail" id="hideIpt">
           </div>
           <div class="form-group">
             <label for="category">所属分类</label>
             <select id="category" class="form-control" name="category">
-              <option value="1">未分类</option>
-              <option value="2">潮生活</option>
+              
             </select>
           </div>
           <div class="form-group">
             <label for="created">发布时间</label>
-            <input id="created" class="form-control" name="created" type="datetime-local">
+            <input id="created" class="form-control" name="createdAt" type="datetime-local">
           </div>
           <div class="form-group">
             <label for="status">状态</label>
-            <select id="status" class="form-control" name="status">
-              <option value="drafted">草稿</option>
-              <option value="published">已发布</option>
+            <select id="status" class="form-control" name="state">
+              <option value="0">草稿</option>
+              <option value="1">已发布</option>
             </select>
           </div>
           <div class="form-group">
@@ -111,6 +111,14 @@
 
   <script src="../assets/vendors/jquery/jquery.js"></script>
   <script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
+  <script src="../assets/vendors/art-template/template-web.js"></script>
+  <!-- 分类下拉框模板 -->
+  <script type="text/html" id="categoryListTpl">
+    {{each data}}
+    <option value="{{$value._id}}">{{$value.title}}</option>
+    {{/each}}
+  </script>
+  <script src="../assets/js/post-add.js"></script>
   <script>NProgress.done()</script>
 </body>
 </html>
